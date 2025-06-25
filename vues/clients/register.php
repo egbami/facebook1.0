@@ -60,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
             
             // Insertion en base de données
-            $stmt = $pdo->prepare("INSERT INTO utilisateurs (nom, prenom, email, username, password, created_at) VALUES (?, ?, ?, ?, ?, NOW())");
+            $stmt = $pdo->prepare("INSERT INTO utilisateurs (nom, prenom, email, username, password) VALUES (?, ?, ?, ?, ?)");
             $stmt->execute([$nom, $prenom, $email, $username, $hashedPassword]);
             
             $_SESSION['message'] = "Inscription réussie ! Bienvenue " . $prenom . " " . $nom;
@@ -71,7 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit();
             
         } catch (PDOException $e) {
-            $errors[] = "Erreur lors de l'inscription. Veuillez réessayer.";
+            $errors[] = "Erreur : " . $e->getMessage(); // À supprimer en production
         }
     }
 }
