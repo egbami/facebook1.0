@@ -5,13 +5,8 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Tw Cen Mt';
     font-size: 16px;
-    line-height: 1.6;
-    color: #333;
-    overflow-x: hidden;
-    position: relative;
-    min-height: 100vh;
 }
 
 .overlay {
@@ -20,15 +15,9 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url('../acceuil/fond.jpg') center center no-repeat;
+    background: url('../acceuil/fond.jpg') center center no-repeat;
     background-size: cover;
     z-index: -1;
-    animation: backgroundZoom 20s ease-in-out infinite alternate;
-}
-
-@keyframes backgroundZoom {
-    0% { transform: scale(1); }
-    100% { transform: scale(1.05); }
 }
 
 header {
@@ -40,181 +29,98 @@ header {
 }
 
 nav {
-    max-width: 1200px;
-    margin: 0 auto;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    justify-content: space-between;
-    padding: 1rem 2rem;
-}
-
-.logo-container {
-    display: block;
-    transition: transform 0.3s ease;
-}
-
-.logo-container:hover {
-    transform: scale(1.05);
-}
-
-.logo {
-    width: 150px;
-    height: auto;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
-}
-
-.nav-menu {
-    display: flex;
-    list-style: none;
-    gap: 2rem;
-    align-items: center;
-}
-
-.nav-link {
-    text-decoration: none;
-    color: #fff;
-    font-weight: 500;
-    font-size: 1.1rem;
-    padding: 0.5rem 1rem;
-    border-radius: 25px;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.nav-link::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
     width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: left 0.5s ease;
+    padding: 30px 0 10px;
 }
 
-.nav-link:hover::before {
-    left: 100%;
+nav .logo {
+    width: 170px;
+    cursor: pointer;
 }
 
-.nav-link:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+nav ul {
+    flex: 1;
+    display: flex;
+    justify-self: flex-end;
+    padding-right: 40px;
+}
+
+nav ul li {
+    list-style: none;
+    margin-left: 20px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #000;
+    font-size: 1.2rem;
+    transition: color .3s;
+}
+
+nav ul li a:hover {
+    color: #2eb0f0;
 }
 
 /* Styles pour le formulaire d'inscription */
 .register-container {
-    max-width: 450px;
+    max-width: 400px;
     margin: 50px auto;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    padding: 2.5rem;
-    border-radius: 20px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    background: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     position: relative;
-    z-index: 5;
-    animation: formSlideIn 0.8s ease-out;
-}
-
-@keyframes formSlideIn {
-    from {
-        opacity: 0;
-        transform: translateY(30px) scale(0.95);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
+    z-index: 1;
 }
 
 .register-container h2 {
     text-align: center;
-    margin-bottom: 2rem;
-    color: #333;
-    font-size: 2rem;
-    font-weight: 600;
+    margin-bottom: 20px;
 }
 
 .form-group {
-    margin-bottom: 1.5rem;
+    margin-bottom: 15px;
 }
 
 label {
     display: block;
-    margin-bottom: 0.5rem;
-    color: #555;
-    font-weight: 500;
+    margin-bottom: 5px;
 }
 
 input[type="text"], input[type="password"], input[type="email"] {
     width: 100%;
-    padding: 12px 16px;
-    border: 2px solid #e1e5e9;
-    border-radius: 10px;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-    background: rgba(255, 255, 255, 0.9);
-}
-
-input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus {
-    outline: none;
-    border-color: #007bff;
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
-    transform: translateY(-2px);
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
 button[type="submit"] {
     width: 100%;
-    padding: 14px;
-    background: linear-gradient(45deg, #007bff, #0056b3);
+    padding: 10px;
+    background: #007bff;
     color: #fff;
     border: none;
-    border-radius: 10px;
-    font-size: 1.1rem;
-    font-weight: 600;
+    border-radius: 4px;
+    font-size: 16px;
     cursor: pointer;
-    margin-top: 1rem;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-button[type="submit"]::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: left 0.5s ease;
-}
-
-button[type="submit"]:hover::before {
-    left: 100%;
+    margin-top: 10px;
 }
 
 button[type="submit"]:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(0, 123, 255, 0.4);
+    background: #0056b3;
 }
 
 /* Styles pour les messages d'erreur */
 .error-messages {
-    background: linear-gradient(45deg, #f8d7da, #f5c6cb);
+    background: #f8d7da;
     color: #721c24;
-    padding: 1rem;
-    border-radius: 10px;
-    margin-bottom: 1.5rem;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 15px;
     border: 1px solid #f5c6cb;
-    animation: shake 0.5s ease-in-out;
-}
-
-@keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    75% { transform: translateX(5px); }
 }
 
 .error {
@@ -225,51 +131,17 @@ button[type="submit"]:hover {
 /* Style pour le lien de connexion */
 .login-link {
     text-align: center;
-    margin-top: 1.5rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid #e1e5e9;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
 }
 
 .login-link a {
     color: #007bff;
     text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s ease;
 }
 
 .login-link a:hover {
-    color: #0056b3;
     text-decoration: underline;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    nav {
-        flex-direction: column;
-        gap: 1rem;
-        padding: 1rem;
-    }
-    
-    .nav-menu {
-        gap: 1rem;
-    }
-    
-    .hero-title {
-        font-size: 2.5rem;
-    }
-    
-    .cta-buttons {
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    .btn {
-        width: 200px;
-    }
-    
-    .register-container {
-        margin: 20px;
-        padding: 2rem;
-    }
 }
 
