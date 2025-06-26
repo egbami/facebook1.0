@@ -98,6 +98,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         <?php endif; ?>
         
+                <!-- Tu dois mettre un attribut id sur le form. Tu lui ajoutes la valeur que tu veux (id comme ce que tu mets dans les input). Tu crées ensuite un fichier script (register.js may be) Dès que c'est bon on continue. -->
         <form method="post" action="">
             <div class="form-group">
                 <label for="nom">Nom</label>
