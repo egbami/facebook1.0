@@ -58,18 +58,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         try {
             // Hashage du mot de passe
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-            
-            // Insertion en base de données
-            $stmt = $pdo->prepare("INSERT INTO utilisateurs (nom, prenom, email, username, password) VALUES (?, ?, ?, ?, ?)");
-            $stmt->execute([$nom, $prenom, $email, $username, $hashedPassword]);
-            
-            $_SESSION['message'] = "Inscription réussie ! Bienvenue " . $prenom . " " . $nom;
+
+            // Génération d'un token de confirmation unique
+            $token = bin2hex(random_bytes(32));
+
+            // Insertion en base de données (ajout des champs confirmation_token et is_active)
+            $stmt = $pdo->prepare("INSERT INTO utilisateurs (nom, prenom, email, username, password, confirmation_token, is_active) VALUES (?, ?, ?, ?, ?, ?, 0)");
+            $stmt->execute([$nom, $prenom, $email, $username, $hashedPassword, $token]);
+
+            // Préparation de l'email de confirmation
+            $to = $email;
+            $subject = "Confirmation de votre inscription";
+            $confirmation_link = "http://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['REQUEST_URI']) . "/confirm.php?token=" . $token;
+            $message = '<html><body>';
+            $message .= '<h1>Bienvenue ' . htmlspecialchars($prenom) . ' ' . htmlspecialchars($nom) . ' !</h1>';
+            $message .= '<p>Merci de vous être inscrit. Veuillez confirmer votre adresse email en cliquant sur le lien ci-dessous :</p>';
+            $message .= '<p><a href="' . $confirmation_link . '">Confirmer mon email</a></p>';
+            $message .= '<p>Si vous n\'êtes pas à l\'origine de cette inscription, ignorez cet email.</p>';
+            $message .= '</body></html>';
+            $headers = "MIME-Version: 1.0" . "\r\n";
+            $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+            $headers .= "From: noreply@" . $_SERVER['HTTP_HOST'] . "\r\n";
+
+            mail($to, $subject, $message, $headers);
+
+            $_SESSION['message'] = "Inscription réussie ! Un email de confirmation vous a été envoyé.";
             $_SESSION['message_type'] = "success";
-            
+
             // Redirection vers la page d'accueil
             header("Location: ../../index.html");
             exit();
-            
+
         } catch (PDOException $e) {
             $errors[] = "Erreur : " . $e->getMessage(); // À supprimer en production
         }
@@ -97,8 +116,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <?php endforeach; ?>
             </div>
         <?php endif; ?>
-        
-        <form method="post" action="">
+        <!-- Tu dois mettre un attribut id sur le form. Tu lui ajoutes la valeur que tu veux (id comme ce que tu mets dans les input). Tu crées ensuite un fichier script (register.js may be) Dès que c'est bon on continue. -->
+        <form id="registerForm" method="post" action="">
             <div class="form-group">
                 <label for="nom">Nom</label>
                 <input type="text" id="nom" name="nom" value="<?php echo isset($_POST['nom']) ? htmlspecialchars($_POST['nom']) : ''; ?>" required>

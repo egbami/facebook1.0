@@ -43,9 +43,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION['prenom'] = $user['prenom'];
                 $_SESSION['message'] = "Connexion réussie ! Bienvenue " . $user['prenom'] . " " . $user['nom'];
                 $_SESSION['message_type'] = "success";
-                
-                // Redirection vers la page d'accueil
-                header("Location: ../../index.html");
+                // La redirection sera gérée côté JavaScript
+                echo json_encode([
+                    'success' => true,
+                    'user_id' => $user['id'],
+                    'username' => $user['username'],
+                    'nom' => $user['nom'],
+                    'prenom' => $user['prenom'],
+                    'message' => $_SESSION['message'],
+                ]);
                 exit();
             } else {
                 $errors[] = "Nom d'utilisateur, email ou mot de passe incorrect";
@@ -64,6 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion</title>
     <link rel="stylesheet" href="../../assets/css/style.css">
+    <script src="../../assets/js/login.js" defer></script>
 </head>
 <body>
     <div class="overlay"></div>
@@ -79,7 +86,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         <?php endif; ?>
         
-        <form method="post" action="">
+        <form id="loginForm" method="post" action="">
             <div class="form-group">
                 <label for="username">Nom d'utilisateur</label>
                 <input type="text" id="username" name="username" value="<?php echo isset($_POST['username']) ? htmlspecialchars($_POST['username']) : ''; ?>" required>

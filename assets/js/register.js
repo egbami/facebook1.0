@@ -1,0 +1,1 @@
+// Script pour la gestion du formulaire d'inscription (à compléter) 
